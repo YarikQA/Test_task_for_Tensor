@@ -2,6 +2,7 @@ from yandex_pages.base_page import BasePage
 from yandex_pages.locators import BaseYandexPageLocators
 from yandex_pages.locators import AfterSearchYandexPageLocators
 
+
 # тут методы для работы со страницей Яндекс
 class YandexPage(BasePage):
     def user_should_see_search_bar(self):
