@@ -8,3 +8,10 @@ class BaseYandexPageLocators:
     # Если понадобится нажимать на кнопку "Найти" вместо Enter
     SUGGEST_LIST = (By.CSS_SELECTOR, "[role='listbox']")
 
+
+class AfterSearchYandexPageLocators:
+    FIRST_RESULT_OF_URL = (By.CSS_SELECTOR, "[data-cid='0'] [class='path organic__path'] a")
+    SECOND_RESULT_OF_URL = (By.CSS_SELECTOR, "[data-cid='1'] [class='Path Organic-Path path organic__path'] a")
+    THIRD_RESULT_OF_URL = (By.CSS_SELECTOR, "[data-cid='3'] [class='Path Organic-Path path organic__path'] a")
+    FOURTH_RESULT_OF_URL = (By.CSS_SELECTOR, "[data-cid='4'] [class='Path Organic-Path path organic__path'] a")
+    FIFTH_RESULT_OF_URL = (By.CSS_SELECTOR, "[data-cid='5'] [class='Path Organic-Path path organic__path'] a")
