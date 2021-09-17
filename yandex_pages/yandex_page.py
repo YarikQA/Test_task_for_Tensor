@@ -1,10 +1,9 @@
 from yandex_pages.base_page import BasePage
-from yandex_pages.locators import BaseYandexPageLocators
-from yandex_pages.locators import AfterSearchYandexPageLocators
+from yandex_pages.locators import BaseYandexPageLocators, AfterSearchYandexPageLocators, YandexImagesPageLocators
 
 
-# тут методы для работы со страницей Яндекс
-class YandexPage(BasePage):
+# тут методы для работы с поисковой строкой и страницей Яндекса после поиска
+class YandexSearchPage(BasePage):
     def user_should_see_search_bar(self):
         assert self.is_element_on_page(*BaseYandexPageLocators.SEARCH_BAR), "Can't find the Search bar"
 
@@ -19,7 +18,6 @@ class YandexPage(BasePage):
     def user_should_see_suggest_list(self):
         assert self.is_element_on_page(*BaseYandexPageLocators.SUGGEST_LIST), "Can't find suggest list"
 
-    #  Сделать через getattribute и взять href
     def tensor_in_first_result_of_search(self):
         self.is_element_on_page_with_wait(*AfterSearchYandexPageLocators.FIRST_RESULT_OF_URL)
         find_url = self.browser.find_element(*AfterSearchYandexPageLocators.FIRST_RESULT_OF_URL)
@@ -54,3 +52,32 @@ class YandexPage(BasePage):
         result = find_url.get_attribute("href")
         print(result)
         assert "tensor.ru" in result, "The fifth website has no url with 'tensor.ru' "
+
+
+# Тут методы для работы со страницей Яндекс.Картинки
+class YandexImagesPage(BasePage):
+    def user_should_see_images(self):
+        assert self.is_element_on_page(*BaseYandexPageLocators.IMAGES_PICTURE)
+
+    def click_on_the_images_link(self):
+        images_picture = self.browser.find_element(*BaseYandexPageLocators.IMAGES_PICTURE)
+        images_picture.click()
+        images_site = self.browser.window_handles[1]
+        self.browser.switch_to.window(images_site)
+
+    def current_url_is_yandex_images(self):
+        current_url = self.browser.current_url
+        assert "https://yandex.ru/images/" in current_url
+
+    def click_on_the_first_image(self):
+        first_image = self.browser.find_element(*YandexImagesPageLocators.FIRST_IMAGE)
+        first_image.click()
+
+    def get_url_of_first_image(self):
+        first_image = self.browser.find_element(*YandexImagesPageLocators.FIRST_IMAGE)
+        link_of_first_image = first_image.get_attribute("href")
+        return link_of_first_image
+
+    def current_page_is_first_image(self, get_url_of_first_image):
+        current_url = self.browser.current_url
+        assert current_url is get_url_of_first_image()
