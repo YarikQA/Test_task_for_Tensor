@@ -7,6 +7,7 @@ class BaseYandexPageLocators:
     SEARCH_BUTTON = (By.CSS_SELECTOR, ".home-arrow__search .search2__button")
     # Если понадобится нажимать на кнопку "Найти" вместо Enter
     SUGGEST_LIST = (By.CSS_SELECTOR, "[role='listbox']")
+    IMAGES_PICTURE = (By.CSS_SELECTOR, "[data-id='images']")
 
 
 class AfterSearchYandexPageLocators:
@@ -15,3 +16,7 @@ class AfterSearchYandexPageLocators:
     THIRD_RESULT_OF_URL = (By.CSS_SELECTOR, "[data-cid='3'] [class='Path Organic-Path path organic__path'] a")
     FOURTH_RESULT_OF_URL = (By.CSS_SELECTOR, "[data-cid='4'] [class='Path Organic-Path path organic__path'] a")
     FIFTH_RESULT_OF_URL = (By.CSS_SELECTOR, "[data-cid='5'] [class='Path Organic-Path path organic__path'] a")
+
+
+class YandexImagesPageLocators:
+    FIRST_IMAGE = (By.CSS_SELECTOR, "[class='PopularRequestList-Item PopularRequestList-Item_pos_0'] a")
