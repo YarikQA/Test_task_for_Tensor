@@ -34,6 +34,3 @@ class BasePage:
         hover = ActionChains(self.browser).move_to_element(element_to_move)
         hover.perform()
 
-    def save_current_url(self):
-        current_url = self.browser.current_url
-        return current_url
