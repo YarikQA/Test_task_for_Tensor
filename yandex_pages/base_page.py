@@ -1,6 +1,7 @@
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 # Тут Базовые методы для работы с веб страницей, которые пригодятся в наследуемых классах
@@ -27,3 +28,12 @@ class BasePage:
             print("Can't find element with Explicit Waits")
             return False
         return True
+
+    def move_mouse_to(self, how, what):  # метод для наведения мышки на элемент
+        element_to_move = self.browser.find_element(how, what)
+        hover = ActionChains(self.browser).move_to_element(element_to_move)
+        hover.perform()
+
+    def save_current_url(self):
+        current_url = self.browser.current_url
+        return current_url
