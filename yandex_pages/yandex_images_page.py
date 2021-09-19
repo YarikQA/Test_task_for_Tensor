@@ -60,14 +60,14 @@ class YandexImagesPage(YandexImagesPageElements):
                current_url != "https://yandex.ru/images/?utm_source=main_stripe_big", "{}".format(error_text)
 
     def name_of_category_is_text_in_search_bar(self):
+        print(self.get_text_of_category_in_search_bar(), "\n")
+        print(self.get_name_of_first_category(), "\n")
         assert self.get_text_of_category_in_search_bar() == self.get_name_of_first_category(), \
             "Wrong text in the search bar, should be text of first category"
 
     def click_on_first_image(self):
         first_image = self.browser.find_element(*YandexImagesPageLocators.FIRST_IMAGE)
         first_image.click()
-
-    # def first_picture_was_open(self): Сделать проверку, что открыта нужная картинка
 
     def picture_is_changing_after_click_forward_and_behind(self):
         old_picture = self.get_picture()
