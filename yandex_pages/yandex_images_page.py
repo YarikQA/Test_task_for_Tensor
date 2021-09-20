@@ -1,5 +1,6 @@
 from yandex_pages.base_page import BasePage
 from yandex_pages.locators import YandexBasePageLocators, YandexImagesPageLocators
+import time
 
 
 # Тут дополнительные необходимые методы для работы с 'Яндекс.Картинки'
@@ -13,10 +14,6 @@ class YandexImagesPageElements(BasePage):
         text_in_search_bar = text_in_search_bar_finder.get_attribute("value")
         return text_in_search_bar
 
-    def get_current_url(self):
-        current_url = self.browser.current_url
-        return current_url
-
     def click_to_next_image(self):
         self.move_mouse_to(*YandexImagesPageLocators.OPENED_IMAGE)
         click_forward_button = self.browser.find_element(*YandexImagesPageLocators.NEXT_PICTURE_ICON)
@@ -26,11 +23,6 @@ class YandexImagesPageElements(BasePage):
         self.move_mouse_to(*YandexImagesPageLocators.OPENED_IMAGE)
         click_behind_button = self.browser.find_element(*YandexImagesPageLocators.PREVIOUS_PICTURE_ICON)
         click_behind_button.click()
-
-    def get_picture(self):
-        picture = self.browser.find_element(*YandexImagesPageLocators.OPENED_IMAGE)
-        picture = picture.get_attribute("src")
-        return picture
 
 
 # Тут основные методы для работы с 'Яндекс.Картинки'
@@ -60,8 +52,6 @@ class YandexImagesPage(YandexImagesPageElements):
                current_url != "https://yandex.ru/images/?utm_source=main_stripe_big", "{}".format(error_text)
 
     def name_of_category_is_text_in_search_bar(self):
-        print(self.get_text_of_category_in_search_bar(), "\n")
-        print(self.get_name_of_first_category(), "\n")
         assert self.get_text_of_category_in_search_bar() == self.get_name_of_first_category(), \
             "Wrong text in the search bar, should be text of first category"
 
@@ -70,16 +60,16 @@ class YandexImagesPage(YandexImagesPageElements):
         first_image.click()
 
     def picture_is_changing_after_click_forward_and_behind(self):
-        old_picture = self.get_picture()
+        old_picture = self.browser.current_url
         self.click_to_next_image()
-        self.is_element_on_page_with_wait(*YandexImagesPageLocators.OPENED_IMAGE)
-        new_picture = self.get_picture()
-        if old_picture != new_picture:  # Если картинки не равны, то откроет прошлую и сравнит ее с картинкой из 6 шага
+        self.is_url_changed(old_picture)
+        new_picture = self.browser.current_url
+        if old_picture != new_picture:
             self.click_to_previous_image()
-            self.is_element_on_page_with_wait(*YandexImagesPageLocators.OPENED_IMAGE)
-            new_old_picture = self.get_picture()
-            assert new_old_picture == old_picture, "This picture is not equal to the picture from step 6"
+            self.is_url_changed(new_picture)
+            new_old_picture = self.browser.current_url
+            assert new_old_picture == old_picture, "Opened picture is not equal to the picture from step 6"
         else:  # Иначе выкинет Assertion Error
-            assert old_picture != new_picture, "The new image is equal to the old image, there is an error somewhere"
-
-# а еще, я не придумал, как достать old_picture из 1 строчки функции, чтобы сделать эту проверку в 2 разных теста
+            assert old_picture != new_picture, "The new image is equal to the previous image, there is an error " \
+                                               "somewhere "
+    # а еще, я не придумал, как достать old_picture из 1 строчки функции, чтобы сделать эту проверку в 2 разных теста
