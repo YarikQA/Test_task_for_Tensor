@@ -5,7 +5,7 @@ import keyboard  # для выполнения 5 шага первого тес�
 
 
 @pytest.mark.search
-class TestYandexSearchBar:  # Тесты поисковой строки
+class TestYandexSearchBar:  # Тесты поисковой строки и страницы после Поиска
     def test_tensor_is_on_finded_results(self, browser):
         link = "https://yandex.ru/"
         page = YandexSearchPage(browser, link)
@@ -33,8 +33,9 @@ class TestYandexImages:  # Тесты страницы Яндекс.Картин
         page.click_on_the_images_link()
         page.current_url_is_yandex_images()
         page.click_on_the_first_category()
-        page.current_page_is_not_yandex_images()  # Если открыта НЕ  базовая страничка Яндекс.Картинки, значит
+        page.current_page_is_not_yandex_images()  # Если открыта НЕ базовая страничка Яндекс.Картинки, значит
         # открылся url 1 категории
         page.name_of_category_is_text_in_search_bar()
         page.click_on_first_image()
         page.picture_is_changing_after_click_forward_and_behind()  # Тут 7 и 8 действие в Тест-кейсе
+        # Проверка, что картинка изменяется после нажатия "вперед" и "назад"
