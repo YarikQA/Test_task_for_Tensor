@@ -3,6 +3,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.action_chains import ActionChains
 
+file_name = "base_page.py"
+
 
 # Тут Базовые методы для работы с веб страницей, которые пригодятся в наследуемых классах
 class BasePage:
@@ -14,7 +16,7 @@ class BasePage:
     def open(self):
         self.browser.get(self.url)
 
-    def is_element_on_page(self, how, what):
+    def is_element_on_page(self, how, what):  # проверка, что на странице есть нужный элемент
         try:
             self.browser.find_element(how, what)
         except NoSuchElementException:
@@ -25,7 +27,7 @@ class BasePage:
         try:
             WebDriverWait(self.browser, timeout).until(ec.presence_of_element_located((how, what)))
         except TimeoutException:
-            print("Can't find element with Explicit Waits")
+            print("Can't find element with Explicit Wait, file={}".format(file_name))
             return False
         return True
 
@@ -38,6 +40,6 @@ class BasePage:
         try:
             WebDriverWait(self.browser, timeout).until(ec.url_changes(what))
         except TimeoutException:
-            print("Url isn't changing")
+            print("Url isn't changing, file={}".format(file_name))
             return False
         return True
