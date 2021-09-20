@@ -1,6 +1,6 @@
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.action_chains import ActionChains
 
 
@@ -21,9 +21,9 @@ class BasePage:
             return False
         return True
 
-    def is_element_on_page_with_wait(self, how, what, timeout=3):
+    def is_element_on_page_with_wait(self, how, what, timeout=5):
         try:
-            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+            WebDriverWait(self.browser, timeout).until(ec.presence_of_element_located((how, what)))
         except TimeoutException:
             print("Can't find element with Explicit Waits")
             return False
@@ -34,3 +34,10 @@ class BasePage:
         hover = ActionChains(self.browser).move_to_element(element_to_move)
         hover.perform()
 
+    def is_url_changed(self, what, timeout=5):
+        try:
+            WebDriverWait(self.browser, timeout).until(ec.url_changes(what))
+        except TimeoutException:
+            print("Url isn't changing")
+            return False
+        return True
