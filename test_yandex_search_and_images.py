@@ -11,9 +11,11 @@ class TestYandexSearchBar:  # Тесты поисковой строки и ст
         page = YandexSearchPage(browser, link)
         page.open()
         page.user_should_see_search_bar()
-        page.input_to_searchbar("Тензор")
+        page.input_tensor_to_searchbar()
         page.user_should_see_suggest_list()
         keyboard.send("enter")  # имитация нажатия пользователем на Enter
+        page.table_of_search_results_appears()  # Если открыта НЕ базовая страница Яндекса, значит открылась таблица
+        # результатов поиска
 
         # проверка 5 url(результатов поиска) на наличие 'tensor.ru'
         page.tensor_in_first_result_of_search()

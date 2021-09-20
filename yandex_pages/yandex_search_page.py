@@ -7,10 +7,11 @@ file_name = "yandex_search_page.py"
 # тут методы для работы с поисковой строкой и страницей Яндекса после поиска
 class YandexSearchPage(BasePage):
     def user_should_see_search_bar(self):
-        assert self.is_element_on_page(*YandexBasePageLocators.SEARCH_BAR), "Can't find the Search bar, file={}"\
+        assert self.is_element_on_page(*YandexBasePageLocators.SEARCH_BAR), "Can't find the Search bar, file={}" \
             .format(file_name)
 
-    def input_to_searchbar(self, text_to_input):
+    def input_tensor_to_searchbar(self):
+        text_to_input = "tensor.ru"
         search_bar = self.browser.find_element(*YandexBasePageLocators.SEARCH_BAR_FOR_INPUT)
         search_bar.send_keys(str(text_to_input))
 
@@ -18,9 +19,17 @@ class YandexSearchPage(BasePage):
         search_button = self.browser.find_element(*YandexBasePageLocators.SEARCH_BUTTON)
         search_button.click()
 
-    def user_should_see_suggest_list(self):
-        assert self.is_element_on_page(*YandexBasePageLocators.SUGGEST_LIST), "Can't find suggest list, file={}"\
+    def user_should_see_suggest_list(self):  # Проверка, что появилась таблица с подсказками
+        assert self.is_element_on_page(*YandexBasePageLocators.SUGGEST_LIST), "Can't find suggest list, file={}" \
             .format(file_name)
+
+    def table_of_search_results_appears(self):
+        error_text = "current page is Yandex Base page, should be page of results of search, file={}" \
+            .format(file_name)
+        current_url = self.browser.current_url
+        assert current_url != "https://yandex.ru", "{}".format(error_text)
+
+        # Дальше проверки, что "tensor.ru" есть среди результатов поиска
 
     def tensor_in_first_result_of_search(self):
         self.is_element_on_page_with_wait(*YandexPageAfterSearchLocators.FIRST_RESULT_OF_URL)
