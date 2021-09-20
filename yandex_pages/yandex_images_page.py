@@ -22,7 +22,7 @@ class YandexImagesPageElements(BasePage):
         click_forward_button = self.browser.find_element(*YandexImagesPageLocators.NEXT_PICTURE_ICON)
         click_forward_button.click()
 
-    def click_to_previous_image(self):  # открытие предыдущей картинке по стрелочке 'назад'
+    def click_to_previous_image(self):  # открытие предыдущей картинки по стрелочке 'назад'
         self.move_mouse_to(*YandexImagesPageLocators.OPENED_IMAGE)
         click_behind_button = self.browser.find_element(*YandexImagesPageLocators.PREVIOUS_PICTURE_ICON)
         click_behind_button.click()
@@ -31,7 +31,7 @@ class YandexImagesPageElements(BasePage):
 # Тут основные методы для работы с 'Яндекс.Картинки'
 class YandexImagesPage(YandexImagesPageElements):
     def user_should_see_images_icon(self):
-        assert self.is_element_on_page(*YandexBasePageLocators.IMAGES_PICTURE), "Can't find 'images' picture on the " \
+        assert self.is_element_on_page(*YandexBasePageLocators.IMAGES_PICTURE), "Can't find 'images' icon on the " \
                                                                                 "page, file={}".format(file_name)
 
     def click_on_the_images_link(self):  # переход на страницу 'Яндекс.Картинки'
@@ -49,7 +49,7 @@ class YandexImagesPage(YandexImagesPageElements):
         first_image.click()
 
     def current_page_is_not_yandex_images(self):
-        error_text = "current url is Yandex.Images Base page, should be url of 1st category of Pictures, file={}"\
+        error_text = "current page is Yandex.Images Base page, should be page of 1st category of Pictures, file={}"\
             .format(file_name)
         current_url = self.browser.current_url
         assert current_url != "https://yandex.ru/images/" and \
