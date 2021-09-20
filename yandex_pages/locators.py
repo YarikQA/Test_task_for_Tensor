@@ -24,7 +24,7 @@ class YandexImagesPageLocators:  # Локаторы для страницы Ян
                                                ".PopularRequestList-SearchText")
     TEXT_IN_SEARCH_BAR = (By.CSS_SELECTOR, ".input__box input")
     FIRST_IMAGE = (By.CSS_SELECTOR, ".serp-item__preview")  # такой селектор, т.к. find_element вернет первый подходящий
-    OPENED_IMAGE = (By.CSS_SELECTOR, ".MMImage-Origin")
+    OPENED_IMAGE = (By.CSS_SELECTOR, ".MMImageWrapper .MMImageContainer .MMImage-Preview")
     NEXT_PICTURE_ICON = (By.CSS_SELECTOR, "[class='CircleButton CircleButton_type_next CircleButton_type "
                                           "MediaViewer-Button MediaViewer-Button_hovered "
                                           "MediaViewer_theme_fiji-Button MediaViewer-ButtonNext "
