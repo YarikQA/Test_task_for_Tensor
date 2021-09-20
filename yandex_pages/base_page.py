@@ -23,7 +23,8 @@ class BasePage:
             return False
         return True
 
-    def is_element_on_page_with_wait(self, how, what, timeout=5):
+    def is_element_on_page_with_wait(self, how, what, timeout=5):  # проверка с явным ожиданием, что на странице есть
+        # нужный элемент
         try:
             WebDriverWait(self.browser, timeout).until(ec.presence_of_element_located((how, what)))
         except TimeoutException:
@@ -36,7 +37,7 @@ class BasePage:
         hover = ActionChains(self.browser).move_to_element(element_to_move)
         hover.perform()
 
-    def is_url_changed(self, what, timeout=5):
+    def is_url_changed(self, what, timeout=5):  # проверка на изменение url
         try:
             WebDriverWait(self.browser, timeout).until(ec.url_changes(what))
         except TimeoutException:
