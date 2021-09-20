@@ -63,14 +63,14 @@ class YandexImagesPage(YandexImagesPageElements):
         first_image = self.browser.find_element(*YandexImagesPageLocators.FIRST_IMAGE)
         first_image.click()
 
-    def picture_is_changing_after_click_forward_and_behind(self):  # Проверка корректности работы кнопок "вперед" и
-        # "назад"
+    def picture_is_changing_after_click_forward_and_behind(self):  # Проверка, что картинка меняется после нажатия
+        # стрелочки "вперед" и проверка того, что при нажатии стрелочки "назад" это будет картинка из 1 действия
         old_picture = self.browser.current_url
         self.click_to_next_image()
         self.is_url_changed(old_picture)
         picture_after_click_forward = self.browser.current_url
         if old_picture != picture_after_click_forward:  # Если картинки не равны, то откроет прошлую и сравнит ее с
-            # картинкой из 6 шага
+            # картинкой до кликов
             self.click_to_previous_image()
             self.is_url_changed(picture_after_click_forward)
             picture_after_click_back = self.browser.current_url
