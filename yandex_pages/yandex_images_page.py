@@ -62,10 +62,12 @@ class YandexImagesPage(YandexImagesPageElements):
     def click_on_first_image(self):
         first_image = self.browser.find_element(*YandexImagesPageLocators.FIRST_IMAGE)
         first_image.click()
+        assert self.is_element_on_page_with_wait(*YandexImagesPageLocators.OPENED_IMAGE), "The first picture was not " \
+                                                                                          "opened, file={}"\
+                .format(file_name)
 
     def picture_is_changing_after_click_forward_and_behind(self):  # Проверка, что картинка меняется после нажатия
         # стрелочки "вперед" и проверка того, что при нажатии стрелочки "назад" это будет картинка из 1 действия
-        self.is_element_on_page_with_wait(*YandexImagesPageLocators.OPENED_IMAGE)
         old_picture = self.browser.current_url
         self.click_to_next_image()
         self.is_url_changed(old_picture)
