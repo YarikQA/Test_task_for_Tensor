@@ -10,8 +10,7 @@ class YandexSearchPage(BasePage):
         assert self.is_element_on_page(*YandexBasePageLocators.SEARCH_BAR), "Can't find the Search bar, file={}" \
             .format(file_name)
 
-    def input_tensor_to_searchbar(self):
-        text_to_input = "tensor.ru"
+    def input_to_searchbar(self, text_to_input):
         search_bar = self.browser.find_element(*YandexBasePageLocators.SEARCH_BAR_FOR_INPUT)
         search_bar.send_keys(str(text_to_input))
 
