@@ -1,7 +1,6 @@
 from yandex_pages.base_page import BasePage
 from yandex_pages.locators import YandexBasePageLocators, YandexImagesPageLocators
 
-
 file_name = "yandex_images_page.py"
 
 
@@ -49,7 +48,7 @@ class YandexImagesPage(YandexImagesPageElements):
         first_image.click()
 
     def current_page_is_not_yandex_images(self):
-        error_text = "current page is Yandex.Images Base page, should be page of 1st category of Pictures, file={}"\
+        error_text = "current page is Yandex.Images Base page, should be page of 1st category of Pictures, file={}" \
             .format(file_name)
         current_url = self.browser.current_url
         assert current_url != "https://yandex.ru/images/" and \
@@ -63,8 +62,8 @@ class YandexImagesPage(YandexImagesPageElements):
         first_image = self.browser.find_element(*YandexImagesPageLocators.FIRST_IMAGE)
         first_image.click()
         assert self.is_element_on_page_with_wait(*YandexImagesPageLocators.OPENED_IMAGE), "The first picture was not " \
-                                                                                          "opened, file={}"\
-                .format(file_name)
+                                                                                          "opened, file={}" \
+            .format(file_name)
 
     def picture_is_changing_after_click_forward_and_behind(self):  # Проверка, что картинка меняется после нажатия
         # стрелочки "вперед" и проверка того, что при нажатии стрелочки "назад" это будет картинка из 1 действия
