@@ -65,6 +65,7 @@ class YandexImagesPage(YandexImagesPageElements):
 
     def picture_is_changing_after_click_forward_and_behind(self):  # Проверка, что картинка меняется после нажатия
         # стрелочки "вперед" и проверка того, что при нажатии стрелочки "назад" это будет картинка из 1 действия
+        self.is_element_on_page_with_wait(*YandexImagesPageLocators.OPENED_IMAGE)
         old_picture = self.browser.current_url
         self.click_to_next_image()
         self.is_url_changed(old_picture)
@@ -74,7 +75,7 @@ class YandexImagesPage(YandexImagesPageElements):
             self.click_to_previous_image()
             self.is_url_changed(picture_after_click_forward)
             picture_after_click_back = self.browser.current_url
-            assert picture_after_click_back == old_picture, "Opened picture is not equal to the picture from step 6, " \
+            assert old_picture == picture_after_click_back, "Opened picture is not equal to the picture from step 6, " \
                                                             "file={}".format(file_name)
         else:  # Иначе выкинет Assertion Error
             assert old_picture != picture_after_click_forward, "The new image is equal to the previous image, there " \
